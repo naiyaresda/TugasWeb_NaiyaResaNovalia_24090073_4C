@@ -26,7 +26,9 @@ export default function PembicaraIndex() {
 
   const [speakers, setSpeakers] = useState(() => {
     const stored = localStorage.getItem("speakers");
-    return stored ? [...defaultSpeakers, ...JSON.parse(stored)] : defaultSpeakers;
+    return stored
+      ? [...defaultSpeakers, ...JSON.parse(stored)]
+      : defaultSpeakers;
   });
 
   const [showModal, setShowModal] = useState(false);
@@ -35,7 +37,8 @@ export default function PembicaraIndex() {
   const [job, setJob] = useState("");
   const [img, setImg] = useState("");
 
-  const handleSubmit = (e) => {
+  // ✅ FIX TYPE DI SINI
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!name || !job) return;
@@ -82,7 +85,7 @@ export default function PembicaraIndex() {
         </button>
       </div>
 
-      {/* 🔥 MODAL (FORM PAPAN TULIS) */}
+      {/* 🔥 MODAL */}
       {showModal && (
         <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
           <form
@@ -97,7 +100,9 @@ export default function PembicaraIndex() {
               type="text"
               placeholder="Nama"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setName(e.target.value)
+              }
               className="w-full border p-2 rounded mb-3"
             />
 
@@ -105,7 +110,9 @@ export default function PembicaraIndex() {
               type="text"
               placeholder="Role"
               value={job}
-              onChange={(e) => setJob(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setJob(e.target.value)
+              }
               className="w-full border p-2 rounded mb-3"
             />
 
@@ -113,7 +120,9 @@ export default function PembicaraIndex() {
               type="text"
               placeholder="URL Foto (optional)"
               value={img}
-              onChange={(e) => setImg(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setImg(e.target.value)
+              }
               className="w-full border p-2 rounded mb-4"
             />
 

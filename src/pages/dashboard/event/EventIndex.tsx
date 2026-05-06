@@ -23,15 +23,17 @@ export default function EventIndex() {
   // ✅ STATE (gabung localStorage)
   const [events, setEvents] = useState(() => {
     const stored = localStorage.getItem("events");
-    return stored ? [...defaultEvents, ...JSON.parse(stored)] : defaultEvents;
+    return stored
+      ? [...defaultEvents, ...JSON.parse(stored)]
+      : defaultEvents;
   });
 
   const [showModal, setShowModal] = useState(false);
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
 
-  // ✅ SUBMIT
-  const handleSubmit = (e) => {
+  // ✅ SUBMIT (FIX TYPE DI SINI)
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!title || !desc) return;
@@ -89,7 +91,9 @@ export default function EventIndex() {
               type="text"
               placeholder="Nama Event"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setTitle(e.target.value)
+              }
               className="w-full border p-2 rounded mb-3"
             />
 
@@ -97,7 +101,9 @@ export default function EventIndex() {
               type="text"
               placeholder="Deskripsi"
               value={desc}
-              onChange={(e) => setDesc(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setDesc(e.target.value)
+              }
               className="w-full border p-2 rounded mb-4"
             />
 

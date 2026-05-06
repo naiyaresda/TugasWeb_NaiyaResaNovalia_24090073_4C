@@ -10,18 +10,18 @@ export default function CategoryIndex() {
   // ✅ STATE
   const [categories, setCategories] = useState(() => {
     const stored = localStorage.getItem("categories");
-    return stored ? [...defaultCategories, ...JSON.parse(stored)] : defaultCategories;
+    return stored
+      ? [...defaultCategories, ...JSON.parse(stored)]
+      : defaultCategories;
   });
 
   const [showModal, setShowModal] = useState(false);
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
 
-  // ✅ SUBMIT
-  const handleSubmit = (e) => {
+  // ✅ SUBMIT (FIX UTAMA DI SINI)
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (!title || !desc) return;
 
     const newCategory = { title, desc };
 
@@ -75,7 +75,9 @@ export default function CategoryIndex() {
               type="text"
               placeholder="Nama"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setTitle(e.target.value)
+              }
               className="w-full border p-2 rounded mb-3"
             />
 
@@ -83,7 +85,9 @@ export default function CategoryIndex() {
               type="text"
               placeholder="Deskripsi"
               value={desc}
-              onChange={(e) => setDesc(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setDesc(e.target.value)
+              }
               className="w-full border p-2 rounded mb-4"
             />
 
@@ -129,8 +133,6 @@ export default function CategoryIndex() {
             </div>
           </div>
         ))}
-
-        {/* FILLER */}
 
       </div>
 
