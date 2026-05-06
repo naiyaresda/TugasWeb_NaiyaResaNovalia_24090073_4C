@@ -1,42 +1,38 @@
+import { useState } from "react";
 import Button from "../components/ui/Button";
 import { Link, useNavigate } from "react-router-dom";
-import { Input } from "../components/ui/Input";
-import { PasswordInput } from "../components/ui/PasswordInput";
-import { useState } from "react";
+
+import { useAuthStore } from "../store/useAuthStore";
 
 export default function Login() {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const login = useAuthStore((state) => state.login);
+
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // VALIDASI SEDERHANA
-    if (!email || !password) {
-      setError("Semua field harus diisi");
-      return;
+    if (data.email == "naiyaresda@gmail.com" && data.password == "admin123") {
+      alert("Login Berhasil");
+
+      login(data.email);
+      navigate("/dashboard");
+    } else {
+      alert("Email atau password anda salah");
     }
-
-    if (password.length < 8) {
-      setError("Password minimal 8 karakter");
-      return;
-    }
-
-    setError("");
-
-    alert("Login berhasil!");
-    navigate("/");
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="bg-white rounded-xl shadow-md flex max-w-4xl w-full">
+    <div className="min-h-[calc(100vh-80px)] flex items-center justify-center bg-gray-100 px-4">
+      <div className="bg-white rounded-xl shadow-md overflow-hidden flex max-w-4xl w-full">
 
         {/* LEFT */}
-        <div className="hidden md:flex w-1/2 bg-gradient-to-b from-red-100 to-red-200 items-center justify-center p-6">
+        <div className="hidden md:flex w-1/2 from-red-100 to-red-200 items-center justify-center p-6">
           <img
             src="https://www.invofest-harkatnegeri.com/assets/Maskot-Hero.png"
             alt="login"
@@ -51,37 +47,34 @@ export default function Login() {
           </h1>
 
           <form onSubmit={handleLogin} className="flex flex-col gap-4">
-
-            <Input
-              label="Email"
+            <input
               type="email"
-              placeholder="Masukkan email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              error={!email && error ? "Email wajib diisi" : ""}
+              placeholder="Email"
+              className="border p-3 rounded-lg"
+              value={data.email}
+              onChange={(e) =>
+                setData({ ...data, email: e.target.value })
+              }
             />
 
-            <PasswordInput
-              label="Password"
-              placeholder="Masukkan password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              error={!password && error ? "Password wajib diisi" : ""}
+            <input
+              type="password"
+              placeholder="Password"
+              className="border p-3 rounded-lg"
+              value={data.password}
+              onChange={(e) =>
+                setData({ ...data, password: e.target.value })
+              }
             />
 
-            {error && (
-              <p className="text-sm text-red-500 text-center">{error}</p>
-            )}
-
-            <Button label="Masuk" />
+            <Button label="Masuk" variant="primary" />
 
             <p className="text-sm text-center text-gray-600">
               Belum punya akun?{" "}
               <Link to="/register" className="text-red-900 font-semibold">
-                Registrasi
+                Registrasi Sekarang
               </Link>
             </p>
-
           </form>
         </div>
 
